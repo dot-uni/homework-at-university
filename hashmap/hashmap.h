@@ -17,6 +17,7 @@
 #ifndef HASHMAP_H
 #define HASHMAP_H
 
+#include <string>
 #include "list.h"
 
 class Hashmap 
@@ -27,6 +28,7 @@ class Hashmap
     float load_factor_;
 
     public:
+        Hashmap() : h_(2), c_(100), size_(0), load_factor_(0.75) {}
         Hashmap(int h, int c) : h_(h), c_(c), size_(0), load_factor_(0) {
             array_ = new List*[c_];
             for (int i = 0; i < c_; ++i) {
@@ -34,10 +36,14 @@ class Hashmap
             }
         }
         Hashmap(int h, int c, int load_factor) : Hashmap(h, c) { 
-            if (load_factor <= 0) {
-                throw std::runtime_error("Значение load_factor должно быть положительно.\n");
+            try {
+                if (load_factor <= 0) {
+                    throw std::runtime_error("Значение load_factor должно быть положительно.\n");
+                }
+                load_factor_ = load_factor; 
+            } catch(std::runtime_error& mess) {
+                std::cerr << mess.what() << "\n";
             }
-            load_factor_ = load_factor; 
         }
         ~Hashmap();
     public:

@@ -4,6 +4,9 @@
 #include <string>
 #include "node_stack.h"
 
+namespace tree 
+{
+
 template <typename T> class Stack 
 {
     Node_Stack<T>* head_;
@@ -139,5 +142,7 @@ void Stack<T>::copy_stack(const Stack<T>& tmp) {
     push_range(container, n);
     delete[] container;
 }
+
+} // namespace tree
 
 #endif
