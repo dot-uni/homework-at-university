@@ -20,7 +20,7 @@ class TextEditor
     public:
         void add(const std::string& str1);
         std::string del(int n);
-        void undo();
+        void undu();
         void redu();
         void print() const;
     private:
