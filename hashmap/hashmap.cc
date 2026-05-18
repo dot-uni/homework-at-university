@@ -63,6 +63,6 @@ void Hashmap::print(const std::string& file_name) const {
     }
 }
 
-inline bool Hashmap::load_check() const {
+bool Hashmap::load_check() const {
     return (c_ * load_factor_) < size_;
 }

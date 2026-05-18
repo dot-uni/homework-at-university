@@ -11,18 +11,32 @@ move(left, right)
 
 
 Cube6::Cube6() {
-    std::srand(static_cast<unsigned int>(std::time(nullptr)));
-    top_ = (std::rand() % 3) + 1;
-    do {
-        forward_ = (std::rand() % 3) + 1;
-    } while(forward_ == top_);
-    right_ = 6 - top_ - forward_;
+    static std::random_device rd;
+    static std::mt19937 gen(rd());
+    std::array<int, 6> sides {1,2,3,4,5,6};
+    std::shuffle(sides.begin(), sides.end(), gen);
+    top_ = sides[0];
+    for (int x : sides) {
+        if (x != top_ && x != 7-top_) {
+            forward_ = x;
+            break;
+        }
+    }
+    for (int x : sides) {
+        if (x != top_ &&
+            x != 7-top_ &&
+            x != forward_ &&
+            x != 7-forward_) {
+            right_ = x;
+            break;
+        }
+    }
 }
 
-Cube6::Cube6(int x1, int x2, int x3) {
+Cube6::Cube6(int top, int forw, int right) {
     auto foo = [](int x) { return (x >= 1 && x <= 6); };
-    if (foo(x1) && foo(x2) && foo(x3)) {
-        top_ = x1; forward_ = x2; right_ = x3;
+    if (foo(top) && foo(forw) && foo(right)) {
+        top_ = top; forward_ = forw; right_ = right;
     }
     else {
         throw std::runtime_error("Числа не подходят для шестигранного куба.");
@@ -68,16 +82,17 @@ void Cube6::mvbackward(int steps) {
     }
 }
 
-void Cube6::move_direction(Move* moves, int size) {
-    for (int move = 0; move < size; ++move) {
-        int steps = moves[move].steps;
-        switch (moves[move].direction) {
+void Cube6::move_direction(const Move* const moves, int size) {
+    for (int i = 0; i < size; ++i) {
+        int steps = moves[i].steps;
+        switch (moves[i].direction) {
             case 'F': mvforward(steps); break;
             case 'B': mvbackward(steps); break;
             case 'R': mvright(steps); break;
             case 'L': mvleft(steps); break;
             default:
-                throw std::runtime_error(std::string("Такого движения нету '") + moves[move].direction + "'");
+                throw std::runtime_error(std::string("Такого движения нету '") + moves[i].direction + "'");
        }
+       print();
     }
 }

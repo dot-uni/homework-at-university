@@ -4,7 +4,7 @@
 #include <string>
 #include "node_stack.h"
 
-namespace tree 
+namespace trs 
 {
 
 template <typename T> class Stack 

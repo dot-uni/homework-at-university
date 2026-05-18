@@ -1,3 +1,4 @@
+#include <fstream>
 #include "adjacency_matrix.h"
 
 
@@ -23,6 +24,15 @@ grph::AdjacencyMatrix& grph::AdjacencyMatrix::operator=(AdjacencyMatrix&& matrix
     size_ = matrix.get_size();
     matrix_size_ = matrix.get_matrix_size();
     return *this;
+}
+
+grph::AdjacencyMatrix::AdjacencyMatrix(char* file_name) : matrix_(nullptr), size_(0) {
+    std::ifstream file(file_name, std::ios::in);        
+    if (!file.good()) throw std::runtime_error("Такой файл не существует\n");
+    std::string line;
+    while (std::getline(file, line)) {
+
+    }
 }
 
 void grph::AdjacencyMatrix::copy_matrix(const int* const* matrix, size_t size) {

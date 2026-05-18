@@ -8,7 +8,7 @@ rebuild(val) найдет val в дереве, если не найдет то �
 
 */
 
-namespace tree 
+namespace trs 
 {
 
 template <typename T> class Node 

@@ -1,7 +1,11 @@
 #include <iostream>
+#include "tree.h"
 
-enum {B, N=2};
 
 int main() {
-    std::cout << B;
+    int vals[] = {10, 5, 20, 15};
+    trs::BinarySearchTree<int> tree(vals);
+    tree.print();
+    tree.change_root(5);
+    tree.print();
 }

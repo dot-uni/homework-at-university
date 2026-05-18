@@ -6,9 +6,6 @@
 namespace grph 
 {
 
-constexpr int MATR_SIZE_MULT = 2;
-constexpr float LOAD_FACTOR = 1.f;
-
 class AdjacencyMatrix final
 {   
     size_t matrix_size_;
@@ -16,6 +13,7 @@ class AdjacencyMatrix final
     int** matrix_;
     public:
         AdjacencyMatrix() : matrix_size_(0), size_(0), matrix_(nullptr) {}
+        AdjacencyMatrix(char* file_name);
         template <size_t N> AdjacencyMatrix(const int (&matrix)[N][N]);
         AdjacencyMatrix(const AdjacencyMatrix& matrix);
         AdjacencyMatrix(AdjacencyMatrix&& matrix);
@@ -58,7 +56,20 @@ void grph::AdjacencyMatrix::copy_matrix(const int (&matrix)[N][N]) {
 
 template <size_t N> 
 void grph::AdjacencyMatrix::add_vertex(const int (&vertex)[N]) {
-
+    if (N == 0) throw std::runtime_error("Vertex is incompatible with this graph");
+    if (N != matrix_size_) {
+        if (matrix_size_ != 0) throw std::runtime_error("Vertex is incompatible with this graph");
+        matrix_size_ = N;
+        matrix_ = new int*[matrix_size_];
+        for (size_t i = 0; i < matrix_size_; ++i) {
+            matrix_[i] = new int[matrix_size_];
+        }
+    }
+    extansion(1);
+    for (size_t i = 0; i < N; ++i) {
+        matrix_[size_][i] = vertex[i];
+    }
+    ++size_;
 }
 
 

@@ -54,7 +54,7 @@ class Hashmap
     private:
         void extension();
         int hash(const std::string& data) const; 
-        inline bool load_check() const;
+        bool load_check() const;
 };
 
 #endif
