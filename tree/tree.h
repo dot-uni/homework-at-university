@@ -8,14 +8,18 @@
 namespace trs
 {
 
-template <typename T> class BinarySearchTree 
+enum Mark {
+    Root,
+    Left,
+    Right
+};
+
+template <typename T> class BinarySearchTree final
 {
     Node<T>* root_;
-    size_t deep_ = 0;
-
     public:
-        BinarySearchTree() : root_(nullptr), deep_(0) {}
-        BinarySearchTree(const T& val) : root_(new Node<T>{val}), deep_(0) {}
+        BinarySearchTree() : root_(nullptr) {}
+        BinarySearchTree(const T& val) : root_(new Node<T>{val}) {}
         template <size_t N> BinarySearchTree(const T (&vals)[N]);
         ~BinarySearchTree() { delete_tree(); }
     public:
@@ -26,6 +30,9 @@ template <typename T> class BinarySearchTree
         bool contains(const T& val);
         void print() const;
     private:
+        void left_rotation(std::pair<Node<T>*, Mark>& tnode, std::pair<Node<T>*, Mark>& parent, Node<T>* parent_above);
+        void right_rotation(std::pair<Node<T>*, Mark>& tnode, std::pair<Node<T>*, Mark>& parent, Node<T>* parent_above);
+        void change_root(Stack<std::pair<Node<T>*, Mark>>& path, const T& val);
         Node<T>* find_node(Node<T>* root, const T& val);
         void delete_found_node(Node<T>* node, Node<T>* parent);
         void print_base(Node<T>* parent) const;
@@ -36,7 +43,7 @@ template <typename T> class BinarySearchTree
 
 template <typename T> 
 template <size_t N>
-BinarySearchTree<T>::BinarySearchTree(const T (&vals)[N]) : root_(nullptr), deep_(0) {
+BinarySearchTree<T>::BinarySearchTree(const T (&vals)[N]) : root_(nullptr) {
     for (size_t i = 0; i < N; ++i) {
         add(vals[i]);
     }
@@ -46,7 +53,6 @@ template <typename T>
 void BinarySearchTree<T>::add(const T& val) {
     if (root_ == nullptr) {
         root_ = new Node<T>{val};
-        deep_ = 0;
         return;
     }
     Node<T>* parent = root_;
@@ -143,6 +149,86 @@ void BinarySearchTree<T>::delete_found_node(Node<T>* node, Node<T>* parent) {
         tmp->set_val(val);
         delete_found_node(tmp, parent_node);
     }
+}
+
+template <typename T> 
+void BinarySearchTree<T>::left_rotation(std::pair<Node<T>*, Mark>& tnode, std::pair<Node<T>*, Mark>& parent, Node<T>* parent_above) {
+    Node<T>* left_node = tnode.first->get_left();
+    tnode.first->set_left(parent.first);
+    parent.first->set_right(left_node);
+    tnode.second = parent.second;
+    switch(parent.second) {
+        case Left:
+            parent_above->set_left(tnode.first); break;
+        case Right:
+            parent_above->set_right(tnode.first); break;
+        case Root:
+            root_ = tnode.first;
+    }  
+}
+
+template <typename T> 
+void BinarySearchTree<T>::right_rotation(std::pair<Node<T>*, Mark>& tnode, std::pair<Node<T>*, Mark>& parent, Node<T>* parent_above) {
+    Node<T>* right_node = tnode.first->get_right();
+    tnode.first->set_right(parent.first);
+    parent.first->set_left(right_node);
+    tnode.second = parent.second;
+    switch(parent.second) {
+        case Left:
+            parent_above->set_left(tnode.first); break;
+        case Right:
+            parent_above->set_right(tnode.first); break;
+        case Root:
+            root_ = tnode.first;
+    }  
+}
+
+template <typename T> 
+void BinarySearchTree<T>::change_root(const T& val) {
+    if (root_ == nullptr) throw std::runtime_error("Дерево пустое");
+    Node<T>* node = root_;
+    Node<T>* tmp = nullptr;
+    Stack<std::pair<Node<T>*, Mark>> path{{root_, Root}}; 
+    while(true) {
+        Mark side;
+        T val_node = node->get_val();
+        if (val == val_node) {
+            change_root(path, val);
+            return;
+        } 
+        else if (val > val_node) {
+            tmp = node->get_right();
+            side = Right;
+        } 
+        else {
+            tmp = node->get_left();
+            side = Left;
+        }
+        if (tmp == nullptr) break;
+        node = tmp;
+        path.push({node, side});
+    }
+    throw std::runtime_error("Такого элемента не существует");
+}
+
+template <typename T> 
+void BinarySearchTree<T>::change_root(Stack<std::pair<Node<T>*, Mark>>& path, const T& val) {
+    auto tnode = path.pop();
+    // std::cout << "OLD ROOT = " << root_->get_val() << "\n";
+    while (!path.empty()) {
+        Node<T>* parent_above = nullptr;
+        auto parent = path.pop();
+        if (path.size() != 0) parent_above = path.top().first;
+        switch(tnode.second) {
+            case Left: 
+                right_rotation(tnode, parent, parent_above); break;
+            case Right:
+                left_rotation(tnode, parent, parent_above); break;
+            default:
+                break;
+        }
+    }
+    // std::cout << "NEW ROOT = " << root_->get_val() << "\n";
 }
 
 template <typename T> 
