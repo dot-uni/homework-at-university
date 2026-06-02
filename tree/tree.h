@@ -23,6 +23,7 @@ template <typename T> class BinarySearchTree final
         template <size_t N> BinarySearchTree(const T (&vals)[N]);
         ~BinarySearchTree() { delete_tree(); }
     public:
+        const Node<T>* const root() const { return root_; }
         void add(const T& val);
         template <size_t N> void add(const T (&val)[N]);
         void remove(const T& val);
@@ -214,7 +215,7 @@ void BinarySearchTree<T>::change_root(const T& val) {
 template <typename T> 
 void BinarySearchTree<T>::change_root(Stack<std::pair<Node<T>*, Mark>>& path, const T& val) {
     auto tnode = path.pop();
-    std::cout << "OLD ROOT = " << root_->get_val() << "\n";
+    // std::cout << "OLD ROOT = " << root_->get_val() << "\n";
     while (!path.empty()) {
         Node<T>* parent_above = nullptr;
         auto parent = path.pop();
@@ -228,7 +229,7 @@ void BinarySearchTree<T>::change_root(Stack<std::pair<Node<T>*, Mark>>& path, co
                 break;
         }
     }
-    std::cout << "NEW ROOT = " << root_->get_val() << "\n";
+    // std::cout << "NEW ROOT = " << root_->get_val() << "\n";
 }
 
 template <typename T> 

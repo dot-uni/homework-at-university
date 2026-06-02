@@ -35,15 +35,11 @@ class Hashmap
                 array_[i] = new List{};
             }
         }
-        Hashmap(int h, int c, int load_factor) : Hashmap(h, c) { 
-            try {
-                if (load_factor <= 0) {
-                    throw std::runtime_error("Значение load_factor должно быть положительно.\n");
-                }
-                load_factor_ = load_factor; 
-            } catch(std::runtime_error& mess) {
-                std::cerr << mess.what() << "\n";
+        Hashmap(int h, int c, float load_factor) : Hashmap(h, c) { 
+            if (load_factor <= 0) {
+                throw std::runtime_error("Значение load_factor должно быть положительно.\n");
             }
+            load_factor_ = load_factor; 
         }
         ~Hashmap();
     public:

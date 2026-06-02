@@ -3,9 +3,22 @@
 
 
 int main() {
-    int vals[] = {10, 5, 20, 15, 25, 13, 17};
-    trs::BinarySearchTree<int> tree(vals);
+    trs::BinarySearchTree<int> tree;
+
+    int x;
+    while (std::cin >> x && x != 0) {
+        tree.add(x);
+        std::cout << "Дерево: ";
+        tree.print();
+    }
+
+    int new_root;
+    const trs::Node<int>* root = tree.root();
+    std::cout << "Корнем дерева является: " << root->get_val() << "\n";
+    std::cout << "Новый корень: ";
+    std::cin >> new_root;
+    tree.change_root(new_root);
     tree.print();
-    tree.change_root(15);
-    tree.print();
+
+    return 0;
 }

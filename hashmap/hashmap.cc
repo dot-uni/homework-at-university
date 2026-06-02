@@ -12,6 +12,8 @@ Hashmap::~Hashmap() {
 }
 
 void Hashmap::extension() {
+    std::cout << "Сейчас содержится " << size_ << " элементов\n";
+    std::cout << "Расширение с " << c_ << " до " << c_*2 << "\n\n";
     int new_c = c_ * 2;
     List** new_array = new List*[new_c];
     for (int i = 0; i < c_; ++i) {

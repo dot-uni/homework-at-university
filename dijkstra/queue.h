@@ -27,6 +27,7 @@ template <typename T> class Queue final
         void push(T val);
         T pop();
         bool empty() const;
+        size_t size() const { return size_; }
         void print() const {
             for (Node<T>* tmp = head_; tmp != nullptr; tmp=tmp->get_next()) {
                 std::cout << tmp->get_data() << " ";

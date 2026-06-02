@@ -1,12 +1,13 @@
 #include <iostream>
 #include <fstream>
+#include <cfloat>
 #include "queue.h"
 // очередь рассмотрения
 // массив размера кол-ва верщин
 // условие остановки 
 
 
-void print(int** matrix, size_t size) {
+void print(float** matrix, size_t size) {
     for (size_t i = 0; i < size; ++i) {
         for (size_t j = 0; j < size; ++j) {
             std::cout << matrix[i][j] << " ";
@@ -15,28 +16,57 @@ void print(int** matrix, size_t size) {
     }
 }
 
+float dijkstra(float** matrix, size_t size, int src, int target) {
+    if ((src <= 0 || src > size) ||
+        (target <= 0 || target > size))
+        throw std::runtime_error("Такой вершины не существует");
 
-int dijkstra(int** matrix, size_t size, int src, int target) {
-    if ((src <= 0 || src > size) || (target <= 0 || target > size)) throw std::runtime_error("Такой вершины не существует");
-    int* dist = new int[size];
-    for (size_t i = 0; i < size; ++i) dist[i] = INT_MAX;
     --src;
+    --target;
+
+    float* dist = new float[size];
+    bool* visited = new bool[size]{};
+
+    for (size_t i = 0; i < size; ++i)
+        dist[i] = FLT_MAX;
+
     dist[src] = 0;
-    Queue<std::pair<int, int>> pq {{0, src}};
-    while(!pq.empty()) {
-        auto top = pq.pop();
-        for (size_t i = 0; i < size; ++i) {
-            int weight = matrix[top.second][i];
-            if (weight == 0) continue;
-            if (dist[i] > dist[top.second] + weight) {
-                dist[i] = dist[top.second] + weight;
-                pq.push({dist[i], i});
+
+    for (size_t i = 0; i < size; ++i) {
+
+        int closest = -1;
+
+        for (size_t j = 0; j < size; ++j) {
+            if (!visited[j] && (closest == -1 || dist[j] < dist[closest])) {
+                closest = j;
+            }
+        }
+
+        if (closest == -1 || dist[closest] == FLT_MAX ||
+            closest == target)
+            break;
+
+        visited[closest] = true;
+
+        for (size_t j = 0; j < size; ++j) {
+
+            if (matrix[closest][j] == 0)
+                continue;
+
+            float newDist =
+                dist[closest] + matrix[closest][j];
+
+            if (dist[j] > newDist) {
+                dist[j] = newDist;
             }
         }
     }
 
-    int res = dist[target-1];
+    float res = dist[target];
+
     delete[] dist;
+    delete[] visited;
+
     return res;
 }
 
@@ -57,19 +87,19 @@ int main(int argc, char** argv) {
 
     std::getline(file, line);
     size_t size = std::stoi(line);
-    int** matrix = new int*[size];
+    float** matrix = new float*[size];
 
     while (std::getline(file, line)) {
-        matrix[idx] = new int[size];
+        matrix[idx] = new float[size];
         size_t start = 0;
         for (size_t k = 0; k < size; ++k) {
             size_t pos = line.find(' ', start);
 
             if (pos == std::string::npos) {
-                matrix[idx][k] = std::stoi(line.substr(start));
+                matrix[idx][k] = std::stof(line.substr(start));
             }
             else {
-                matrix[idx][k] = std::stoi(line.substr(start, pos - start));
+                matrix[idx][k] = std::stof(line.substr(start, pos - start));
                 start = pos + 1;
             }
         }
@@ -77,10 +107,11 @@ int main(int argc, char** argv) {
     }
     if (idx != size) return 4;
 
-    // print(matrix, size);
-    int res = dijkstra(matrix, size, src, target);
+    print(matrix, size);
+    float res = dijkstra(matrix, size, src, target);
     std::cout << res << "\n";
 
+    
     for (int i = 0; i < size; ++i) {
         delete[] matrix[i]; 
     }

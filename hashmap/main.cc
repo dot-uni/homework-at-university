@@ -29,22 +29,23 @@ int main() {
         }
     }
 
-    Hashmap hashmap1{5, 70};   
-    Hashmap hashmap2{7, 103};   
-    Hashmap hashmap3{11, 121};   
-    Hashmap hashmap4{2, 100};   
+    float load_factor = 0.75;
+    Hashmap hashmap1{2, 100, load_factor};   
+    // Hashmap hashmap2{7, 103};   
+    // Hashmap hashmap3{11, 121};   
+    // Hashmap hashmap4{2, 100};   
 
     for (int i = 0; i < n; ++i) {
         hashmap1.add(strs[i]);
-        hashmap2.add(strs[i]);
-        hashmap3.add(strs[i]);
-        hashmap4.add(strs[i]);
+        // hashmap2.add(strs[i]);
+        // hashmap3.add(strs[i]);
+        // hashmap4.add(strs[i]);
     }
 
     hashmap1.print("hashmap1");
-    hashmap2.print("hashmap2");
-    hashmap3.print("hashmap3");
-    hashmap4.print("hashmap4");
+    // hashmap2.print("hashmap2");
+    // hashmap3.print("hashmap3");
+    // hashmap4.print("hashmap4");
     delete[] strs;
     return 0;
 }
