@@ -23,9 +23,9 @@ int main() {
             default:
                 throw std::runtime_error(std::string("Такого движения нету '") + direction + "'");
         }
-        std::cout << "\n";
+        std::cout << '\n';
         cube.print();
-        std::cout << "\n";
+        std::cout << '\n';
         cnt++;
     }
     // cube.move_direction(moves, n);

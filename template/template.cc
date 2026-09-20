@@ -56,7 +56,7 @@ size_t fill_template_buffer(const char* file_templ, char** buffer, const size_t 
             // ...........
             if (star == std::string::npos) {
                 point = file.tellg();
-                line_end += line_beg + "\n";
+                line_end += line_beg + '\n';
                 break;
             }
             
@@ -65,7 +65,7 @@ size_t fill_template_buffer(const char* file_templ, char** buffer, const size_t 
                 point += star;
                 line_end += line_beg;     
                 set(buffer, idx, line_end);
-                line_end = "\n";
+                line_end = '\n';
                 if (idx >= buf_size) { 
                     return idx;
                 }
@@ -203,7 +203,7 @@ ExitCode insert_template(const char* file_templ, const char* file_names) {
         }
         delete[] array_names;
     } catch(std::runtime_error& mess) {
-        std::cerr << mess.what() << "\n";
+        std::cerr << mess.what() << '\n';
         return NOT_FOUND;
     }
     return SUCCESS;
@@ -216,7 +216,7 @@ int main(int argc, char** argv) {
         code = insert_template(argv[1], argv[2]);
     }
     else {
-        std::cerr << MAKE_ERROR("Not enough input data") << "\n";
+        std::cerr << MAKE_ERROR("Not enough input data") << '\n';
         return NOT_ENGH_ARG;
     }
     return code;

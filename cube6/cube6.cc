@@ -44,9 +44,9 @@ Cube6::Cube6(int top, int forw, int right) {
 }
 
 void Cube6::print() const {
-    std::cout << "      B" << 7 - forward_ << "\n";
-    std::cout << "      T" << top_ << "\n";
-    std::cout << "L" << 7 - right_ << "    F" << forward_ << "     R" << right_ << "\n";
+    std::cout << "      B" << 7 - forward_ << '\n';
+    std::cout << "      T" << top_ << '\n';
+    std::cout << "L" << 7 - right_ << "    F" << forward_ << "     R" << right_ << '\n';
     std::cout << "      D" << 7 - top_ << "\n\n";
 }
 

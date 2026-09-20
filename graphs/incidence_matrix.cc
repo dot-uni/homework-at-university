@@ -47,7 +47,7 @@ void IncidenceMatrix::Print() const {
         for (size_t col = 0; col < ecount_; ++col) {
             std::cout << matrix_[row][col] << " ";
         }
-        std::cout << "\n";
+        std::cout << '\n';
     }
 }
 
@@ -60,7 +60,7 @@ void IncidenceMatrix::BreadthFirstSearch(size_t start) const {
         size_t current = queue.pop();
         if (visited[current]) continue;
         visited[current] = true;
-        std::cout << "Visited: " << current+1 << "\n";
+        std::cout << "Visited: " << current+1 << '\n';
 
         for (size_t col = 0; col < ecount_; ++col) {
             if (matrix_[current][col] == 0) continue;
@@ -86,7 +86,7 @@ void IncidenceMatrix::DepthFirstSearch(size_t start) const {
         size_t current = stack.pop();
         if (visited[current]) continue;
         visited[current] = true;
-        std::cout << "Visited: " << current+1 << "\n";
+        std::cout << "Visited: " << current+1 << '\n';
 
         for (size_t col = 0; col < ecount_; ++col) {
             if (matrix_[current][col] == 0) continue;
@@ -149,7 +149,7 @@ void IncidenceMatrix::Dijkstra(size_t start, int* dist, size_t* parent) const {
             std::cout << "Пути до вершины " << v+1 << " нету\n";
             continue;
         }
-        std::cout << "Путь до вершины " << v+1 << " = " << dist[v] << "\n";
+        std::cout << "Путь до вершины " << v+1 << " = " << dist[v] << '\n';
 
         size_t* parent_buf = new size_t[vcount_];
         size_t current = v;
@@ -163,7 +163,7 @@ void IncidenceMatrix::Dijkstra(size_t start, int* dist, size_t* parent) const {
             std::cout << parent_buf[i-1]+1;
             if (i > 1) std::cout << " -> ";
         }
-        std::cout << "\n";
+        std::cout << '\n';
         delete[] parent_buf;
     }
 }

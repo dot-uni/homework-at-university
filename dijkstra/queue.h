@@ -32,7 +32,7 @@ template <typename T> class Queue final
             for (Node<T>* tmp = head_; tmp != nullptr; tmp=tmp->get_next()) {
                 std::cout << tmp->get_data() << " ";
             }
-            std::cout << "\n";
+            std::cout << '\n';
         }
     private:
         void delete_queue();

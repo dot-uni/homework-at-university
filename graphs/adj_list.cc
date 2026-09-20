@@ -93,7 +93,7 @@ void AdjList::BreadthFirstSearch(int start) const {
         int current = queue.pop();
         if (visited[current]) continue;
         visited[current] = true;
-        std::cout << "Visited: " << current+1 << "\n";
+        std::cout << "Visited: " << current+1 << '\n';
 
         EdgeNode* tmp = list_[current];
         while (tmp != nullptr) {
@@ -116,7 +116,7 @@ void AdjList::DepthFirstSearch(int start) const {
         int current = stack.pop();
         if (visited[current]) continue;
         visited[current] = true;
-        std::cout << "Visited: " << current+1 << "\n";
+        std::cout << "Visited: " << current+1 << '\n';
 
         EdgeNode* tmp = list_[current];
         while (tmp != nullptr) {
@@ -146,7 +146,7 @@ void AdjList::Dijkstra(int start, int* dist, int* parent) const {
                 minv = j;
             }
         }
-        if (minv == -1) break;
+        if (minv == -1 || minv == 2) break;
         if (dist[minv] == INT_MAX) continue;
         visited[minv] = true;
 
@@ -170,7 +170,7 @@ void AdjList::Dijkstra(int start, int* dist, int* parent) const {
             std::cout << "Пути до вершины " << i+1 << " не существует\n";
             continue;
         }
-        std::cout << "Путь до вершины " << i+1 << " равен " << dist[i] << "\n";
+        std::cout << "Путь до вершины " << i+1 << " равен " << dist[i] << '\n';
 
         int* parent_buf = new int[size_];
         int current = i;
@@ -184,7 +184,7 @@ void AdjList::Dijkstra(int start, int* dist, int* parent) const {
             std::cout << parent_buf[j]+1 << "";
             if (j > 0) std::cout << " -> ";
         }
-        std::cout << "\n";
+        std::cout << '\n';
         delete[] parent_buf;
     }
 
@@ -202,6 +202,6 @@ void AdjList::Print() const {
             std::cout << tmp->to+1 << " ";
             tmp = tmp->next;
         }
-        std::cout << "\n";
+        std::cout << '\n';
     }
 }

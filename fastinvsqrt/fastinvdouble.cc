@@ -17,5 +17,5 @@ int main() {
         x2 = FastInvSqrt(x);
         mxdelta = std::max(mxdelta, abs(x1 - x2)/x1);
     } 
-    std::cout << "Ответ: " << mxdelta << "\n";
+    std::cout << "Ответ: " << mxdelta << '\n';
 }

@@ -51,7 +51,7 @@ void TextEditor::redu() {
 }
 
 void TextEditor::print() const {
-    std::cout << "text_editor:: "<< str_ << "\n";
+    std::cout << "text_editor:: "<< str_ << '\n';
 }
 
 void TextEditor::add_base(const std::string& str1) {

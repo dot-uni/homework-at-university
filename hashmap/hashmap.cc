@@ -61,7 +61,7 @@ bool Hashmap::contains(const std::string& data) const {
 void Hashmap::print(const std::string& file_name) const {   
     std::ofstream file(file_name+".txt", std::ios::out);
     for (int i = 0; i < c_; ++i) {
-        file << i << ";" << array_[i]->get_count() << "\n";
+        file << i << ";" << array_[i]->get_count() << '\n';
     }
 }
 

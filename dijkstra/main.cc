@@ -12,7 +12,7 @@ void print(float** matrix, size_t size) {
         for (size_t j = 0; j < size; ++j) {
             std::cout << matrix[i][j] << " ";
         }
-        std::cout << "\n";
+        std::cout << '\n';
     }
 }
 
@@ -109,7 +109,7 @@ int main(int argc, char** argv) {
 
     print(matrix, size);
     float res = dijkstra(matrix, size, src, target);
-    std::cout << res << "\n";
+    std::cout << res << '\n';
 
     
     for (int i = 0; i < size; ++i) {

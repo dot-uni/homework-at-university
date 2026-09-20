@@ -44,7 +44,7 @@ void AdjGraph::PrintAdjMatrix() const {
         for (size_t col = 0; col < size_; ++col) {
             std::cout << matrix_[row][col] << " ";
         }
-        std::cout << "\n";
+        std::cout << '\n';
     }
 }
 
@@ -64,7 +64,7 @@ void AdjGraph::BreadthFirstSearch(size_t start) const {
         if (visited[current]) continue;
         visited[current] = true;
         
-        std::cout << "Visited: " << current+1 << "\n";
+        std::cout << "Visited: " << current+1 << '\n';
 
         for (size_t col = 0; col < size_; ++col) {
             if (matrix_[current][col] == 0 || visited[col] == true) continue;
@@ -92,7 +92,7 @@ void AdjGraph::DepthFirstSearch(size_t start) const {
         if (visited[current]) continue;
         visited[current] = true;
         
-        std::cout << "Visited: " << current+1 << "\n";
+        std::cout << "Visited: " << current+1 << '\n';
         for (size_t col = 0; col < size_; ++col) {
             if (matrix_[current][col] == 0 || visited[col] == true) continue;
             stack.push(col);
@@ -146,7 +146,7 @@ void AdjGraph::Dijkstra(size_t start, int* dist, int* parent) const {
             std::cout << "Пути до вершины " << vertex+1 << " нету\n";
             continue;
         }
-        std::cout << "Путь до вершины " << vertex+1 << " = " << dist[vertex] << "\n";
+        std::cout << "Путь до вершины " << vertex+1 << " = " << dist[vertex] << '\n';
 
         int* path_buffer = new int[size_];
         size_t idx = 0;
@@ -160,7 +160,7 @@ void AdjGraph::Dijkstra(size_t start, int* dist, int* parent) const {
             std::cout << path_buffer[i-1]+1;
             if (i > 1) std::cout << " -> ";
         }
-        std::cout << "\n";
+        std::cout << '\n';
         delete[] path_buffer;
     }
 }
